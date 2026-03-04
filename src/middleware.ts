@@ -24,8 +24,12 @@ setAll: (cookies: any[]) => {
 
   const pathname = req.nextUrl.pathname;
   const isAuthRoute = pathname.startsWith("/login");
-  const isPublic = isAuthRoute || pathname.startsWith("/_next") || pathname === "/";
-
+const isPublic =
+  isAuthRoute ||
+  pathname.startsWith("/_next") ||
+  pathname === "/" ||
+  pathname.startsWith("/debug");
+  
   if (!user && !isPublic) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
