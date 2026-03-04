@@ -2,8 +2,8 @@ import { createSupabaseServer } from "@/lib/supabase/server";
 import PipelineBoard from "./pipelineBoard";
 
 export default async function PipelinePage() {
-  const supabase = createSupabaseServer();
-
+const supabase = await createSupabaseServer();
+  
   const { data: stages } = await supabase
     .from("stages")
     .select("name,order_index")
