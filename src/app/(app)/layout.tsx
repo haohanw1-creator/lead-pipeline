@@ -3,7 +3,7 @@ import { createSupabaseServer } from "@/lib/supabase/server";
 import SignOutButton from "./signOutButton";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const supabase = createSupabaseServer();
+const supabase = await createSupabaseServer();
   const { data } = await supabase.auth.getUser();
   const userEmail = data.user?.email ?? "";
 
