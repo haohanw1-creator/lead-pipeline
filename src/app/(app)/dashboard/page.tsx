@@ -18,7 +18,7 @@ function addDaysISO(days: number) {
 }
 
 export default async function DashboardPage() {
-  const supabase = createSupabaseServer();
+const supabase = await createSupabaseServer();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
