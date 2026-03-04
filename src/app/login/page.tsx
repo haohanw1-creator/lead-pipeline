@@ -11,17 +11,26 @@ export default function LoginPage() {
   const [msg, setMsg] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setMsg(null);
+  e.preventDefault();
+  setMsg(null);
 
-    const fn =
-      mode === "signin"
-        ? supabase.auth.signInWithPassword
-        : supabase.auth.signUp;
+  if (mode === "signin") {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) return setMsg(error.message);
+    setMsg("Signed in.");
+    return;
+  }
 
-    const { error } = await fn({ email, password });
-    if (error) setMsg(error.message);
-    else setMsg(mode === "signup" ? "Account created. You can sign in now." : "Signed in.");
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  if (error) return setMsg(error.message);
+  setMsg("Account created. You can sign in now.");
+}
   }
 
   return (
